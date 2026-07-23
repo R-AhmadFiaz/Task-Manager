@@ -353,20 +353,3 @@ In every case, the app code only ever performs a normal database write — Supab
 
 ---
 
-## 8. Loom Explanation Script (~1 minute)
-
-> "Hey team — quick walkthrough of the real-time approach for our Task Manager.
->
-> Real-time communication just means the app updates itself the instant something changes, instead of the user having to refresh or the app having to keep asking the server 'anything new?'. Think WhatsApp, or Google Docs — when someone else does something, you see it immediately.
->
-> For this project, we're using **Supabase Realtime**. Here's why: our database is already on Supabase, so instead of building and hosting our own WebSocket server, we let Supabase watch the database directly. Whenever a row changes — a task is created, updated, or deleted — Supabase picks that up from Postgres's replication log and pushes it straight to every connected client over a WebSocket connection it manages for us.
->
-> This matters especially because we're deploying on Vercel, and Vercel's serverless functions aren't built to hold long-lived connections open — they're short-lived by design. Supabase Realtime sidesteps that completely, because the persistent connection lives on Supabase's side, not inside our Next.js app.
->
-> So practically: when User A creates, edits, completes, or deletes a task, that change hits our Supabase database, and every other connected user's task list updates automatically — no polling, no refresh, no custom backend event code. It's the simplest, most production-ready fit for our stack.
->
-> That's the plan for real-time in this project — next step is wiring up the actual subscriptions once we start implementation."
-
----
-
-*Document prepared as part of Session 2 – Task 1 (Research Only). No application code, dependencies, or existing files were modified.*
