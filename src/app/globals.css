@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/*
+ * This app has no dark theme — every component hardcodes light
+ * backgrounds (bg-white / bg-gray-50). Pinning these to fixed light
+ * values (instead of swapping under prefers-color-scheme: dark) avoids
+ * near-white text landing on those same light backgrounds when the
+ * system is in dark mode.
+ */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -10,13 +17,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

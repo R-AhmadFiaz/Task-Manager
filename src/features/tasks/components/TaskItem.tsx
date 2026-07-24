@@ -59,7 +59,7 @@ export function TaskItem({ task }: TaskItemProps) {
         checked={task.completed}
         onChange={handleToggle}
         disabled={isPending}
-        className="h-4 w-4 rounded border-gray-300"
+        className="h-4 w-4 cursor-pointer rounded border-gray-300 disabled:cursor-not-allowed"
         aria-label={`Mark "${task.title}" as ${task.completed ? "active" : "completed"}`}
       />
 
@@ -77,13 +77,13 @@ export function TaskItem({ task }: TaskItemProps) {
             }
           }}
           autoFocus
-          className="flex-1 rounded border border-gray-300 px-2 py-1 text-sm"
+          className="flex-1 rounded border border-gray-300 px-2 py-1 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900"
         />
       ) : (
         <button
           type="button"
           onClick={() => setIsEditing(true)}
-          className={`flex-1 text-left text-sm ${
+          className={`flex-1 cursor-pointer text-left text-sm ${
             task.completed ? "text-gray-400 line-through" : "text-gray-900"
           }`}
         >
@@ -95,7 +95,7 @@ export function TaskItem({ task }: TaskItemProps) {
         type="button"
         onClick={handleDelete}
         disabled={isPending}
-        className="text-sm text-red-500 hover:text-red-700 disabled:opacity-50"
+        className="cursor-pointer text-sm text-red-500 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
         aria-label={`Delete "${task.title}"`}
       >
         Delete

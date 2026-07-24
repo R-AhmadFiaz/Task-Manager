@@ -12,7 +12,12 @@ export function SubmitButton({ children, pendingLabel, className, ...props }: Su
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" disabled={pending} className={className} {...props}>
+    <button
+      type="submit"
+      disabled={pending}
+      className={`cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${className ?? ""}`}
+      {...props}
+    >
       {pending ? pendingLabel : children}
     </button>
   );

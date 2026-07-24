@@ -20,14 +20,26 @@ production foundation: authentication, the `tasks` table, and CRUD.
 2. Create a Supabase project, then in the SQL Editor run [`supabase/schema.sql`](supabase/schema.sql)
    to create the `tasks` table, its indexes, and Row Level Security policies.
 
-3. Copy the env example and fill in your project's API URL/anon key
-   (Project Settings -> API):
+3. Copy the env example and fill in your project's API URL/anon key, both found at
+   **Project Settings -> API**:
+   - `NEXT_PUBLIC_SUPABASE_URL` = "Project URL"
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = "anon public" key under Project API keys
 
    ```bash
    cp .env.local.example .env.local
    ```
 
-4. Run the dev server:
+4. In **Authentication -> URL Configuration**, set:
+   - **Site URL**: `http://localhost:3000` (your deployed URL in production)
+   - **Redirect URLs**: add `http://localhost:3000/**`
+
+   The Email provider is enabled by default and needs no extra setup. If
+   **Authentication -> Providers -> Email -> Confirm email** is ON, new users must click
+   the confirmation link before they get a session — the register form already shows a
+   "check your email" message for this case. Turn it off if you want instant sign-in
+   during local development.
+
+5. Run the dev server:
 
    ```bash
    npm run dev
