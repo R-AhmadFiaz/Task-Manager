@@ -34,6 +34,25 @@ drop index if exists public.tasks_user_id_idx;
 create index if not exists tasks_user_id_created_at_idx
   on public.tasks (user_id, created_at desc);
 
+-- Broadcast row changes over Supabase Realtime (Postgres Changes). Without
+-- this, INSERT/UPDATE/DELETE never reach subscribed clients regardless of
+-- app code — tables are not included in this publication by default.
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'tasks'
+  ) then
+    alter publication supabase_realtime add table public.tasks;
+  end if;
+end $$;
+
+-- Default REPLICA IDENTITY only includes primary-key columns in the "old"
+-- row image for UPDATE/DELETE WAL records — so a Realtime subscription
+-- filtered on `user_id=eq.<id>` can never match a DELETE, since `user_id`
+-- isn't present in that payload at all. FULL includes every column.
+alter table public.tasks replica identity full;
+
 -- Row Level Security: every policy scopes rows to the requesting user only.
 alter table public.tasks enable row level security;
 

@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import type { Task } from "@/types/task";
 
@@ -9,6 +8,18 @@ export interface TaskActionResult {
 }
 
 const emptyResult: TaskActionResult = { error: null };
+
+// Reflecting mutations back into the UI is realtime's job (see
+// useRealtimeTasks) — the acting tab receives its own change through its
+// own subscription, same as any other tab. These actions intentionally do
+// NOT call revalidatePath: doing so would bundle a full dashboard RSC
+// re-render into every mutation's response, which both contradicts "update
+// only the affected task" and made the submit button stay disabled far
+// longer than the (now faster) realtime round-trip that already reflects
+// the change — a real user's rapid next click would silently land while
+// still disabled. A fresh navigation to /dashboard always gets correct
+// data regardless, since that route reads cookies() and is already forced
+// dynamic.
 
 export async function getTasks(): Promise<Task[]> {
   const supabase = await createClient();
@@ -52,7 +63,6 @@ export async function createTask(
     return { error: error.message };
   }
 
-  revalidatePath("/dashboard");
   return emptyResult;
 }
 
@@ -68,7 +78,6 @@ export async function updateTaskTitle(taskId: string, title: string): Promise<Ta
     return { error: error.message };
   }
 
-  revalidatePath("/dashboard");
   return emptyResult;
 }
 
@@ -80,7 +89,6 @@ export async function toggleTaskCompleted(taskId: string, completed: boolean): P
     return { error: error.message };
   }
 
-  revalidatePath("/dashboard");
   return emptyResult;
 }
 
@@ -92,6 +100,5 @@ export async function deleteTask(taskId: string): Promise<TaskActionResult> {
     return { error: error.message };
   }
 
-  revalidatePath("/dashboard");
   return emptyResult;
 }
