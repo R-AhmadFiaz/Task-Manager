@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="popup-header">
+        <h1>Task Manager</h1>
+      </header>
+
+      <div id="loading-state" class="state">
+        <p class="muted">Checking your session…</p>
+      </div>
+
+      <div id="unauthenticated-state" class="state" hidden>
+        <p class="message">Log in to create tasks from here.</p>
+
+        <form id="login-form" class="stack" novalidate>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required autocomplete="current-password" />
+          </div>
+          <button id="login-button" type="submit" class="primary-button">Log in</button>
+          <p id="login-error" class="error" role="alert" hidden></p>
+        </form>
+
+        <button id="open-dashboard-unauth" type="button" class="secondary-button">Open Dashboard</button>
+      </div>
+
+      <div id="authenticated-state" class="state" hidden>
+        <p class="account">Signed in as <span id="account-email"></span></p>
+
+        <form id="task-form" class="stack" novalidate>
+          <input
+            id="task-title"
+            name="title"
+            type="text"
+            placeholder="Add a new task…"
+            required
+            autocomplete="off"
+          />
+          <button id="add-task-button" type="submit" class="primary-button">Add Task</button>
+          <p id="task-success" class="success" role="status" aria-live="polite" hidden>Task added.</p>
+          <p id="task-error" class="error" role="alert" hidden></p>
+        </form>
+
+        <div class="footer-actions">
+          <button id="open-dashboard-auth" type="button" class="secondary-button">Open Dashboard</button>
+          <button id="logout-button" type="button" class="link-button">Log out</button>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

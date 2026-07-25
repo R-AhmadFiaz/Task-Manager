@@ -1,8 +1,9 @@
 # Task-Manager
 
 Cross-platform real-time Task Manager. Authentication, the `tasks` table with RLS,
-full CRUD, live cross-tab/cross-device/cross-user sync via Supabase Realtime, and a
-native-canvas whiteboard for sketching ideas alongside your tasks.
+full CRUD, live cross-tab/cross-device/cross-user sync via Supabase Realtime, a
+native-canvas whiteboard for sketching ideas alongside your tasks, and a Chrome
+extension for adding tasks without opening the site.
 
 ## Stack
 
@@ -76,13 +77,14 @@ src/
   types/                 Task and Database types
 supabase/
   schema.sql             tasks table, RLS policies, updated_at trigger, Realtime setup
+chrome-extension/        popup + background service worker — see its own README
 docs/
   realtime-research.md   real-time architecture research (Session 2 – Task 1)
 ```
 
-Future sessions will add a Chrome extension, Expo, and Tauri clients on top of this
-same Supabase backend, auth flow, and Realtime channel — no changes to this
-foundation should be required to plug those in.
+Future sessions will add Expo and Tauri clients on top of this same Supabase
+backend, auth flow, and Realtime channel — no changes to this foundation should
+be required to plug those in.
 
 ## Realtime
 
@@ -129,3 +131,13 @@ native `<canvas>`, no drawing library.
   clear their own pixel buffer whenever their width/height attribute changes —
   this is what specifically works around that).
 - `Clear` wipes both the visible canvas and the stroke history.
+
+## Chrome extension
+
+A Manifest V3 popup (`chrome-extension/`) for adding a task without opening the
+site — the same Supabase project, `tasks` table, RLS, and Realtime setup as the
+web app, so a task created from the extension appears on the dashboard instantly.
+It keeps its own sign-in (the web app's session cookie is `httpOnly` and
+therefore invisible to any extension), persisted in `chrome.storage.local`. See
+[`chrome-extension/README.md`](chrome-extension/README.md) for how to load it and
+the full architectural reasoning.
