@@ -1,7 +1,8 @@
 # Task-Manager
 
 Cross-platform real-time Task Manager. Authentication, the `tasks` table with RLS,
-full CRUD, and live cross-tab/cross-device/cross-user sync via Supabase Realtime.
+full CRUD, live cross-tab/cross-device/cross-user sync via Supabase Realtime, and a
+native-canvas whiteboard for sketching ideas alongside your tasks.
 
 ## Stack
 
@@ -62,6 +63,14 @@ src/
         useRealtimeTasks.ts  subscribes to Postgres Changes for the signed-in
                              user's tasks and merges INSERT/UPDATE/DELETE
                              events into local state
+    whiteboard/
+      components/          Whiteboard, WhiteboardCanvas, WhiteboardToolbar,
+                           WhiteboardSection (the dashboard's open/hide toggle)
+      hooks/
+        useWhiteboard.ts     owns canvas lifecycle, resize/DPR handling, and
+                             pointer-event drawing logic (see "Whiteboard" below)
+      lib/drawing.ts         pure canvas-drawing functions (no React)
+      types/                 Point, Stroke
   components/           small shared UI pieces (e.g. SubmitButton)
   lib/supabase/          browser/server Supabase clients + session middleware
   types/                 Task and Database types
@@ -95,3 +104,28 @@ Two one-time SQL requirements (both handled by `schema.sql`, neither optional):
   default replica identity only includes primary-key columns in a deleted row's
   payload, so a subscription filtered on `user_id` can never match a DELETE
   without it.
+
+## Whiteboard
+
+A collapsible whiteboard on the dashboard (below the task list, hidden until
+"Open whiteboard" is clicked so it never gets in the way of task management) for
+freehand sketching — diagrams, quick notes, workflows — alongside your tasks. Pure
+native `<canvas>`, no drawing library.
+
+- **Mouse and touch in one code path**: Pointer Events (`onPointerDown/Move/Up`)
+  unify both; `touch-action: none` on the canvas stops the browser from trying to
+  scroll/zoom while drawing.
+- **Performance**: nothing during an active stroke touches React state — points,
+  the drawing flag, and committed strokes all live in refs, so a pointermove never
+  triggers a re-render. Only `color` and `brushSize` are state (they drive the
+  toolbar UI); a "latest ref" mirrors them for the stable pointer-event callbacks
+  to read without needing to be recreated.
+- **Smooth lines**: each new segment is drawn immediately with a quadratic curve
+  through the midpoints of the last three points — smooths out the jagged-polyline
+  look of raw point-to-point lines without redrawing the whole stroke every frame.
+- **Resize-safe**: a `ResizeObserver` on the canvas's container rescales every
+  already-drawn stroke's stored points proportionally before replaying them,
+  so resizing the window doesn't stretch, crop, or wipe a drawing (canvases
+  clear their own pixel buffer whenever their width/height attribute changes —
+  this is what specifically works around that).
+- `Clear` wipes both the visible canvas and the stroke history.

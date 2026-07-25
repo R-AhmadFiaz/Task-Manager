@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getTasks } from "@/features/tasks/actions";
 import { DashboardHeader } from "@/features/tasks/components/DashboardHeader";
 import { TaskBoard } from "@/features/tasks/components/TaskBoard";
+import { WhiteboardSection } from "@/features/whiteboard/components/WhiteboardSection";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -21,8 +22,9 @@ export default async function DashboardPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       <DashboardHeader email={user.email ?? ""} />
-      <div className="mx-auto max-w-2xl px-4 py-8">
+      <div className="mx-auto max-w-2xl space-y-10 px-4 py-8">
         <TaskBoard tasks={tasks} userId={user.id} />
+        <WhiteboardSection />
       </div>
     </main>
   );
