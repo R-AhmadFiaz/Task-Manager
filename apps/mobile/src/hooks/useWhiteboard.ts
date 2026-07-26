@@ -68,6 +68,17 @@ export function useWhiteboard(): UseWhiteboardResult {
       PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: () => true,
+        // Capture-phase counterparts of the two above: without these, the
+        // whiteboard sits inside TasksScreen's FlatList (as its
+        // ListFooterComponent), and on Android the FlatList's own scroll
+        // responder can intercept a touch-move sequence — for its own
+        // scroll gesture — before this bubble-phase responder ever claims
+        // it, since real device touch dispatch does capture/bubble
+        // arbitration that a web/mouse test never exercises. Returning true
+        // here makes the canvas claim the gesture during the capture phase,
+        // before the FlatList gets a chance to steal it.
+        onStartShouldSetPanResponderCapture: () => true,
+        onMoveShouldSetPanResponderCapture: () => true,
         onPanResponderGrant: (event) => {
           const point = pointFromEvent(event);
           pointsRef.current = [point];

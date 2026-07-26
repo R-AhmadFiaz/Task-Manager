@@ -1,0 +1,25 @@
+Place the Android build here, named exactly:
+
+  TaskManager.apk
+
+How to produce it from apps/mobile, pick one:
+
+  Option A - EAS Build (produces a real installable .apk):
+    cd apps/mobile
+    npx eas build --platform android --profile preview
+    (requires a free Expo/EAS account; downloads an .apk from the build page)
+
+  Option B - local Gradle build (requires Android SDK, already set up on
+  this machine under C:\Android\Sdk):
+    cd apps/mobile
+    npx expo prebuild --platform android
+    cd android
+    ./gradlew assembleRelease
+    Output lands at:
+      apps/mobile/android/app/build/outputs/apk/release/app-release.apk
+
+Copy whichever file you produce into this folder and rename it to
+TaskManager.apk (or update the filename in src/app/downloads/page.tsx).
+
+This placeholder file itself is not an APK — delete it once the real
+one is in place.

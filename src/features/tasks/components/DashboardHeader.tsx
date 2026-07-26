@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { signOut } from "@/features/auth/actions";
 
 interface DashboardHeaderProps {
@@ -12,14 +13,19 @@ export function DashboardHeader({ email }: DashboardHeaderProps) {
           <h1 className="text-lg font-semibold text-gray-900">Task Manager</h1>
           <p className="text-sm text-gray-500">{email}</p>
         </div>
-        <form action={signOut}>
-          <button
-            type="submit"
-            className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Logout
-          </button>
-        </form>
+        <div className="flex items-center gap-4">
+          <form action={signOut}>
+            <button
+              type="submit"
+              className="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Logout
+            </button>
+          </form>
+          <Link href="/downloads" className="text-sm text-gray-500 hover:text-gray-700">
+            Downloads
+          </Link>
+        </div>
       </div>
     </header>
   );
