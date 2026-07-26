@@ -1,0 +1,521 @@
+/* Mirrors the web app's palette (gray-50/white/gray-900/gray-300) so the
+   desktop app feels like part of the same product. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #111827;
+  background: #f9fafb;
+}
+
+#root {
+  height: 100vh;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.centered {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+/* ---- Login ---- */
+
+.login-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 320px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: #111827;
+}
+
+.login-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  box-shadow: none;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+input:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 2px #111827;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #111827;
+}
+
+.primary-button {
+  padding: 8px 12px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #111827;
+  border: none;
+  border-radius: 6px;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: #1f2937;
+  border-color: transparent;
+}
+
+.secondary-button {
+  padding: 8px 12px;
+  font-weight: 500;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.secondary-button:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.error-text {
+  margin: 0;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+/* ---- Tasks ---- */
+
+.tasks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tasks-header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.tasks-header .email {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.tasks-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-form {
+  display: flex;
+  gap: 8px;
+}
+
+.task-form input {
+  flex: 1;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.task-row:last-child {
+  border-bottom: none;
+}
+
+.task-row input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #111827;
+  box-shadow: none;
+}
+
+.task-title {
+  flex: 1;
+  color: #111827;
+}
+
+.task-title.completed {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 13px;
+  padding: 4px;
+}
+
+.delete-button:hover:not(:disabled) {
+  color: #b91c1c;
+  border-color: transparent;
+}
+
+.empty-text,
+.muted-text {
+  color: #6b7280;
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* ---- Auth (register/login toggle) ---- */
+
+.field-hint {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.info-text {
+  margin: 0;
+  font-size: 13px;
+  color: #16a34a;
+}
+
+.auth-switch {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #111827;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.link-button:hover:not(:disabled) {
+  color: #1f2937;
+}
+
+.session-error-banner {
+  text-align: center;
+  padding: 8px 16px 0;
+}
+
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.error-boundary-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.error-boundary-message {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ---- Task stats ---- */
+
+.task-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ---- Task filters ---- */
+
+.task-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.filter-button {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.filter-button:hover:not(:disabled) {
+  background: #f9fafb;
+}
+
+.filter-button.active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+/* ---- Task title editing ---- */
+
+.task-title-input {
+  flex: 1;
+  padding: 4px 6px;
+}
+
+.task-row-error {
+  margin: 0;
+  font-size: 12px;
+  color: #dc2626;
+  width: 100%;
+}
+
+/* ---- Whiteboard ---- */
+
+.whiteboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.whiteboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.whiteboard-section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.whiteboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.whiteboard-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.whiteboard-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.whiteboard-toolbar-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.whiteboard-swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.whiteboard-swatch {
+  height: 22px;
+  width: 22px;
+  padding: 0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+}
+
+.whiteboard-swatch.selected {
+  border-color: #111827;
+}
+
+.whiteboard-custom-color {
+  position: relative;
+  display: flex;
+  height: 22px;
+  width: 22px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 2px dashed #d1d5db;
+  font-size: 11px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.whiteboard-custom-color-plus {
+  pointer-events: none;
+}
+
+.whiteboard-custom-color input[type="color"] {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.whiteboard-brush-slider {
+  width: 96px;
+  accent-color: #111827;
+  cursor: pointer;
+}
+
+.whiteboard-brush-value {
+  width: 20px;
+  text-align: right;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.whiteboard-clear-button {
+  margin-left: auto;
+}
+
+.whiteboard-canvas-container {
+  height: 320px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.whiteboard-canvas {
+  height: 100%;
+  width: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  display: block;
+}
