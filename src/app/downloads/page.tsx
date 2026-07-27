@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isDownloadAvailable } from "@/lib/downloads";
 import { DownloadCard } from "@/components/DownloadCard";
 import { AndroidIcon, BrowserIcon, DesktopIcon, PuzzleIcon } from "@/components/DownloadIcons";
+import { SiteNav } from "@/components/SiteNav";
 
 export default async function DownloadsPage() {
   const supabase = await createClient();
@@ -24,8 +25,9 @@ export default async function DownloadsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-4xl">
+    <main className="min-h-screen bg-gray-50">
+      <SiteNav isAuthenticated={!!user} />
+      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
         <div className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">Downloads</h1>
           <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-gray-500">
