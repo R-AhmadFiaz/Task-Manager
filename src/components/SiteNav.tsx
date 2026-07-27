@@ -33,25 +33,16 @@ export function SiteNav({ isAuthenticated = false }: SiteNavProps) {
   return (
     <nav className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
       <span className="text-sm font-semibold text-gray-900">Task Manager</span>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-        {isAuthenticated ? (
-          <Link href="/dashboard" className={linkClassName("/dashboard", primaryStyle)}>
-            Dashboard
-          </Link>
-        ) : (
-          <div className="flex gap-3">
-            <Link href="/login" className={linkClassName("/login", primaryStyle)}>
-              Login
-            </Link>
-            <Link href="/register" className={linkClassName("/register", secondaryStyle)}>
-              Register
-            </Link>
-          </div>
-        )}
-        <Link href="/downloads" className={linkClassName("/downloads", secondaryStyle)}>
-          Downloads
+
+      {isAuthenticated && (
+        <Link href="/dashboard" className={linkClassName("/dashboard", primaryStyle)}>
+          Dashboard
         </Link>
-      </div>
+      )}
+
+      <Link href="/downloads" className={linkClassName("/downloads", secondaryStyle)}>
+        Downloads
+      </Link>
     </nav>
   );
 }
